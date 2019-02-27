@@ -50,3 +50,16 @@ class Blockchain {
 		return true
 	}
 }
+
+let ourCrypto = new Blockchain();
+ourCrypto.addBlock(new Block(1,'10/07/2017',{amount: 4}));
+ourCrypto.addBlock(new Block(2,'1/15/2018',{amount: 10}));
+
+console.log(JSON.stringify(ourCrypto, null, 4));
+
+console.log('Is our blockchain valid?' + ourCrypto.isChainValid());
+
+ourCrypto.chain[1].data = {amount: 100};
+ourCrypto.chain[1].hash = ourCrypto.chain[1].calculateHash();
+
+console.log('Is our blockchain valid?' + ourCrypto.isChainValid());
