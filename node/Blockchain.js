@@ -9,7 +9,8 @@ class Transaction {
 }
 
 class Block {
-	constructor(timestamp, data, previousHash=''){
+	constructor(timestamp, transactions, data, previousHash=''){
+		this.transactions = transactions;
 		this.timestamp = timestamp;
 		this.previousHash = previousHash;
     this.data = data;
@@ -96,10 +97,17 @@ class Blockchain {
 }
 
 let ourCrypto = new Blockchain();
-console.log("MinningBlock 1");
-ourCrypto.addBlock(new Block(1, "1/01/2018", {amount: 5}));
-console.log("MinningBlock 2");
-ourCrypto.addBlock(new Block(2, "1/01/2019", {amount: 32}));
+ourCrypto.addTransaction(new Transaction('address1', 'address2', 400));
+ourCrypto.addTransaction(new Transaction('address2', 'address1', 150));
 
-console.log(JSON.stringify(ourCrypto, null, 4));
-console.log('Is blockchain valid?' + ourCrypto.isChainValid().toString());
+console.log('\nStarting the miner.');
+ourCrypto.minePendingTransactions('our-address');
+console.log('\nThe account balance is: ', ourCrypto.getBalanceOfAddress('our-address'));
+
+console.log('\nStarting the miner a second time.');
+ourCrypto.minePendingTransactions('our-address');
+console.log('\nThe account balance is: ', ourCrypto.getBalanceOfAddress('our-address'));
+
+console.log('\nStarting the miner a third time.');
+ourCrypto.minePendingTransactions('our-address');
+console.log('\nThe account balance is: ', ourCrypto.getBalanceOfAddress('our-address'));
